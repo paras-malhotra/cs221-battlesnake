@@ -14,7 +14,9 @@ import random
 import typing
 from game import GameState
 from agents import MinimaxAgent, RandomAgent
-
+from server import get_server
+import logging
+import os
 
 # info is called when you create your Battlesnake on play.battlesnake.com
 # and controls your Battlesnake's appearance
@@ -99,11 +101,14 @@ def move(game_state: typing.Dict) -> typing.Dict:
     print(f"MOVE {game_state['turn']}: {next_move}")
     return {"move": next_move}
 
-def main():
-    from server import run_server
-
-    run_server({"info": info, "start": start, "move": move, "end": end})
+app = get_server({"info": info, "start": start, "move": move, "end": end})
 
 # Start server when `python main.py` is run
 if __name__ == "__main__":
-    main()
+    host = "0.0.0.0"
+    port = int(os.environ.get("PORT", "8000"))
+
+    logging.getLogger("werkzeug").setLevel(logging.ERROR)
+
+    print(f"\nRunning Battlesnake at http://{host}:{port}")
+    app.run(host=host, port=port)
