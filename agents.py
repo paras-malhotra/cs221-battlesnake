@@ -1,4 +1,4 @@
-from game import GameState
+from game import GameState, Player
 from search import minDistanceToFoodBfs
 from typing import Optional, Tuple, List
 import random
@@ -38,6 +38,8 @@ class MinimaxAgent(Agent):
             legalMoves = gameState.getLegalActions()
             if len(legalMoves) > 0:
                 return self.moveTieBreaker(legalMoves, gameState)
+            
+        print(f"At {gameState.players[0].head}, legal moves: {gameState.getLegalActions()}, selected: {bestMove}")
 
         return bestMove
         
@@ -93,9 +95,10 @@ class MinimaxAgent(Agent):
             if minDistanceToFoodBfs == -1:
                 foodScore = 0
             else:
-                foodScore = 100 if foodDistance == 0 else 100 / foodDistance
+                healthGainFromFood = Player.MAX_HEALTH - gameState.players[0].health
+                foodScore = healthGainFromFood if foodDistance == 0 else (healthGainFromFood - 2) / foodDistance
 
-        # print(f"food score: {foodScore}, distance: {foodDistance}")
+        # print(f"food score: {foodScore}, distance: {foodDistance}, ({x}, {y}) to {gameState.food}")
 
         return gameState.players[0].health + foodScore - 20 * (len(gameState.getAlivePlayers()) - 1)
     
