@@ -90,7 +90,10 @@ class MinimaxAgent(Agent):
             foodScore = 0
         else:
             foodDistance = minDistanceToFoodBfs(x, y, gameState.food, gameState.getWalls(), gameState.width, gameState.height)
-            foodScore = 100 if foodDistance == 0 else 100 / foodDistance
+            if minDistanceToFoodBfs == -1:
+                foodScore = 0
+            else:
+                foodScore = 100 if foodDistance == 0 else 100 / foodDistance
 
         # print(f"food score: {foodScore}, distance: {foodDistance}")
 

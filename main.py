@@ -47,7 +47,7 @@ def end(game_state: typing.Dict):
 def move(game_state: typing.Dict) -> typing.Dict:
     #print(f"State: {game_state}")
     state = GameState(game_state)
-    agent = MinimaxAgent(3)
+    agent = MinimaxAgent(2)
     recommendedMove = agent.getAction(state)
 
     return {"move": recommendedMove, "shout": ""}
