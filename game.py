@@ -78,9 +78,9 @@ class GameState:
     def generateSuccessor(self, action: Optional[str], playerIndex: int) -> GameState:
         nextState = self.deepCopy()
 
-        if(len(nextState.getAlivePlayers()) <= 1):
-            # game already over
-            return nextState
+        # if(len(nextState.getAlivePlayers()) <= 1):
+        #     # game already over
+        #     return nextState
         
         player = nextState.players[playerIndex]
         
@@ -148,6 +148,20 @@ class GameState:
             'tie': self.tie
         }.__str__()
     
+    def __eq__(self, other) -> bool:
+        if other is None: return False
+        # TODO Check for type of other
+        if not self.width == other.width: return False
+        if not self.height == other.height: return False
+        if not self.food == other.food: return False
+        if not self.hazards == other.hazards: return False
+        if not self.players == other.players: return False
+        if not self.endState == other.endState: return False
+        if not self.won == other.won: return False
+        if not self.lost == other.lost: return False
+        if not self.tie == other.tie: return False
+        return True
+    
 class Player:
     MAX_HEALTH = 100
     MIN_LENGTH = 3
@@ -206,6 +220,18 @@ class Player:
             'alive': self.alive,
             'ours': self.ours
         }.__str__()
+    
+    def __eq__(self, other) -> bool:
+        if other is None: return False
+        # TODO Check for type of other
+        if not self.id == other.id: return False
+        if not self.health == other.health: return False
+        if not self.head == other.head: return False
+        if not self.body == other.body: return False
+        if not self.length == other.length: return False
+        if not self.alive == other.alive: return False
+        if not self.ours == other.ours: return False
+        return True
 
 class GameRules:
     WRAPPED = False

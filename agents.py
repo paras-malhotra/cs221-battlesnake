@@ -8,12 +8,18 @@ class Agent:
         raise NotImplementedError("Override me")
     
 class RandomAgent(Agent):
+    # futureState = None
     def getAction(self, gameState: GameState) -> Optional[str]:
         # print(f"Game state: {gameState}")
         legalMoves = gameState.getLegalActions()
 
         selectedChoice = random.choice(legalMoves) if len(legalMoves) > 0 else None
+
+        # if self.futureState is not None and self.futureState.players != gameState.players:
+        #     print(f"mismatch b/w predicted {self.futureState.players} and actual {gameState.players}")
+
         print(f"At {gameState.players[0].head}, legal moves: {legalMoves}, selected: {selectedChoice}")
+        # self.futureState = gameState.generateSuccessor(selectedChoice, 0)
 
         return selectedChoice
     
