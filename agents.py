@@ -120,3 +120,79 @@ class MinimaxAgent(Agent):
         # reduce depth on last agent, else same depth
         return (curDepth - 1) if curIndex == (len(gameState.players) - 1) else curDepth
     
+class AlphaBetaAgent(MinimaxAgent):
+    def getAction(self, gameState: GameState) -> Optional[str]:
+        # print(f"Game state: {gameState}")
+        players = gameState.players
+
+        if not players[0].ours:
+            # our player is not alive
+            return None
+
+        (bestValue, bestMove) = self.vpruned(gameState, 0, self.depth, None, None)
+
+        if bestMove is None:
+            # certain death
+            legalMoves = gameState.getLegalActions()
+            if len(legalMoves) > 0:
+                return self.moveTieBreaker(legalMoves, gameState)
+            
+        print(f"At {gameState.players[0].head}, legal moves: {gameState.getLegalActions()}, selected: {bestMove}")
+
+        return bestMove
+    
+    def vpruned(self, gameState: GameState, index: int, depth: int, alpha: Optional[float], beta: Optional[float]) -> Tuple[float, Optional[str]]:
+        if depth == 0 or gameState.isEndState() or len(gameState.players) <= 1:
+            return (self.evaluationFunction(gameState), None)
+        
+        if index == 0:
+            # Our move (maximizing)
+            legalMoves = gameState.getLegalActions(0)
+            if (len(legalMoves) == 0):
+                return (-MinimaxAgent.WIN_REWARD, None)
+            
+            bestValue = None
+            bestMoves = []
+
+            for move in legalMoves:
+                value = self.vpruned(gameState.generateSuccessor(move, 0), 1, depth, alpha, beta)[0]
+
+                if bestValue is None or value > bestValue:
+                    bestValue = value
+                    bestMoves = [move]
+                if value == bestValue:
+                    bestMoves.append(move)
+                if alpha is None or value > alpha:
+                    alpha = value
+                if beta is not None and beta <= alpha:
+                    break
+
+            # if depth != self.depth:
+            #     print(f"vminimax at depth {depth}, index {index}: {(bestValue, bestMoves[0])}")
+            
+            return (bestValue, self.moveTieBreaker(bestMoves, gameState) if depth == self.depth and len(bestMoves) > 1 else bestMoves[0])
+        
+        else:
+            # Opponent's move (minimizing)
+            legalMoves = gameState.getLegalActions(index)
+            
+            if (len(legalMoves) == 0) or not gameState.players[index].alive:
+                # go to the next agent
+                return self.vpruned(gameState.generateSuccessor(None, index), self.getNextIndex(index, gameState), self.getNextDepth(index, depth, gameState), alpha, beta)
+            
+            bestValue = None
+            bestMove = None
+
+            for move in legalMoves:
+                value = self.vpruned(gameState.generateSuccessor(move, index), self.getNextIndex(index, gameState), self.getNextDepth(index, depth, gameState), alpha, beta)[0]
+                if bestValue is None or value < bestValue:
+                      bestValue = value
+                      bestMove = move
+                if beta is None or value < beta:
+                    beta = value
+                if alpha is not None and beta <= alpha:
+                    break
+
+            # print(f"vminimax at depth {depth}, index {index}: {(bestValue, bestMoves[0])}")
+
+            return (bestValue, bestMove)

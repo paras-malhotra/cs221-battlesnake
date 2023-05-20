@@ -13,7 +13,7 @@
 import random
 import typing
 from game import GameState
-from agents import MinimaxAgent, RandomAgent
+from agents import MinimaxAgent, RandomAgent, AlphaBetaAgent
 from server import get_server
 import logging
 import os
@@ -49,7 +49,7 @@ def end(game_state: typing.Dict):
 def move(game_state: typing.Dict) -> typing.Dict:
     #print(f"State: {game_state}")
     state = GameState(game_state)
-    agent = RandomAgent()
+    agent = AlphaBetaAgent(3)
     recommendedMove = agent.getAction(state)
 
     return {"move": recommendedMove, "shout": ""}
