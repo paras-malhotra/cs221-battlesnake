@@ -1,12 +1,31 @@
 import random
-from typing import List, Tuple
+from typing import List, Optional, Tuple
 from agents import Agent
 from game import Actions, GameRules, GameState, Player
 import util
+import json
 
 class TrainableAgent(Agent):
     def learn(self, beforeState: GameState, afterState: GameState, action: str):
         raise NotImplementedError
+
+class DataDumpAgent(TrainableAgent):
+    def __init__(self) -> None:
+        self.dataset = []
+
+    def getAction(self, gameState: GameState) -> Optional[str]:
+        legalMoves = gameState.getLegalActions()
+        selectedChoice = random.choice(legalMoves) if len(legalMoves) > 0 else None
+
+        return selectedChoice
+
+    def learn(self, beforeState: GameState, afterState: GameState, action: str):
+        self.dataset.append({'gameState': beforeState.toJson(), 'action': action})
+
+    def dump(self, filename: str):
+        #print(len(self.dataset))
+        out_file = open(filename, 'w')
+        json.dump(self.dataset, out_file, indent=4)
 
 class Trainer:
     def __init__(self, enemyAgents: List[Agent], width: int = 11, height: int = 11) -> None:
@@ -66,7 +85,7 @@ class GameSimulator:
                     'alive': True,
                 }] + [{
                     'health': Player.MAX_HEALTH,
-                    'body': util.getCoordinates([enemyLocations[i]]),
+                    'body': util.getDictCoordinates([enemyLocations[i]]),
                     'length': 1,
                     'id': i + 2,
                     'alive': True

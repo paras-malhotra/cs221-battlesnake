@@ -18,7 +18,7 @@ class RandomAgent(Agent):
         # if self.futureState is not None and self.futureState.players != gameState.players:
         #     print(f"mismatch b/w predicted {self.futureState.players} and actual {gameState.players}")
 
-        print(f"At {gameState.players[0].head}, legal moves: {legalMoves}, selected: {selectedChoice}")
+        #print(f"At {gameState.players[0].head}, legal moves: {legalMoves}, selected: {selectedChoice}")
         # self.futureState = gameState.generateSuccessor(selectedChoice, 0)
 
         return selectedChoice

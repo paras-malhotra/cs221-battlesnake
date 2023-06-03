@@ -1,4 +1,5 @@
 from __future__ import annotations
+import json
 from typing import Dict, List, Optional, Tuple
 import util
 
@@ -161,6 +162,9 @@ class GameState:
         if not self.lost == other.lost: return False
         if not self.tie == other.tie: return False
         return True
+
+    def toJson(self) -> str:
+        return json.dumps(self, default=lambda o: o.__dict__)
     
 class Player:
     MAX_HEALTH = 100
