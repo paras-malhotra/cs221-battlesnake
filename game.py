@@ -116,11 +116,6 @@ class GameState:
                         # either cur player is yet to play (head to body collision) or is higher health, so moving player dies
                         player.alive = False
                         break
-                        
-
-            # check food consumption
-            if (newx, newy) in nextState.food:
-                nextState.food.remove((newx, newy))
 
         # end state accounting
         nextState.accountForEndState()
@@ -189,6 +184,7 @@ class Player:
         if newHead in food:
             # increase health to max if food is consumed
             self.health = Player.MAX_HEALTH
+            food.remove(newHead)
         else:
             # truncate from tail if food not consumed
             if(len(self.body) > Player.MIN_LENGTH):

@@ -26,10 +26,24 @@ class DataDumpAgent(TrainableAgent):
         return selectedChoice
 
     def learn(self, beforeState: GameState, afterState: GameState, action: str):
-        self.dataset.append({'gameState': beforeState, 'action': action})
+        self.dataset.append({'gameState': beforeState, 'action': action, 'reward': self.getReward(beforeState, afterState)})
+
+    def getReward(self, beforeState: GameState, afterState: GameState) -> float:
+        if afterState.isEndState():
+            if afterState.isWon():
+                return 1.0
+            elif afterState.isLost():
+                return -1.0
+            elif afterState.isTie():
+                return 0.0
+        else:
+            if afterState.players[0].health > beforeState.players[0].health:
+                return 0.1
+            else:
+                return 0.0
 
     def dump(self, filename: str):
-        #print(len(self.dataset))
+        print(f"Dumped {len(self.dataset)} records")
         out_file = open(filename, 'w')
         json.dump(self.dataset, out_file, indent=4, cls=CustomEncoder)
 
