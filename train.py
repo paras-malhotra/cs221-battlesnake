@@ -1,5 +1,5 @@
 import random
-from typing import List, Optional, Tuple
+from typing import Any, List, Optional, Tuple
 from agents import Agent
 from game import Actions, GameRules, GameState, Player
 import util
@@ -8,6 +8,12 @@ import json
 class TrainableAgent(Agent):
     def learn(self, beforeState: GameState, afterState: GameState, action: str):
         raise NotImplementedError
+
+class CustomEncoder(json.JSONEncoder):
+    def default(self, o: Any) -> Any:
+        if(isinstance(o, GameState) or isinstance(o, Player)):
+            return o.__dict__
+        return super().default(o)
 
 class DataDumpAgent(TrainableAgent):
     def __init__(self) -> None:
@@ -20,12 +26,12 @@ class DataDumpAgent(TrainableAgent):
         return selectedChoice
 
     def learn(self, beforeState: GameState, afterState: GameState, action: str):
-        self.dataset.append({'gameState': beforeState.toJson(), 'action': action})
+        self.dataset.append({'gameState': beforeState, 'action': action})
 
     def dump(self, filename: str):
         #print(len(self.dataset))
         out_file = open(filename, 'w')
-        json.dump(self.dataset, out_file, indent=4)
+        json.dump(self.dataset, out_file, indent=4, cls=CustomEncoder)
 
 class Trainer:
     def __init__(self, enemyAgents: List[Agent], width: int = 11, height: int = 11) -> None:
