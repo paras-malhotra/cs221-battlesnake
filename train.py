@@ -68,15 +68,20 @@ class Trainer:
                 for player in alivePlayers:
                     action = agent.getAction(currentState) if player.ours else self.enemyAgents[player.id - 2].getAction(currentState)
                     if action is None or action not in GameRules.getLegalActions(currentState, player.id - 1):
+                        # if action is not None and action not in GameRules.getLegalActions(currentState, player.id - 1):
+                        #     print(f"Illegal action: {action}, allowed only: {Actions.getVerbosePossibleActions(currentState.players, currentState.width, currentState.height, player.id - 1)}")
+                        #     print(f"{currentState.getAlivePlayers()} for player with id {player.id}")
                         player.alive = False
                     else:
                         player.move(action, currentState.width, currentState.height, currentState.food, currentState.hazards)
                     
                     if player.ours:
-                        agent.learn(beforeState, currentState, action)
-                
+                        ourAction = action
+
                 currentState.accountForEndState()
+                agent.learn(beforeState, currentState, ourAction)
                 GameSimulator.ensureMinimumFood(currentState)
+            # print(f"transitioned from {beforeState.players} to {currentState.players}")
             self.numEpisodes = self.numEpisodes + 1
         
 class GameSimulator:
@@ -127,7 +132,10 @@ class GameSimulator:
         if minFoodPellets == 0:
             minFoodPellets = len(alivePlayers)
         
-        food = []
+        if len(gameState.food) >= minFoodPellets:
+            return
+        
+        food = gameState.food
         while(len(food) < minFoodPellets):
             foodPelletLocation = (random.randint(0, gameState.width - 1), random.randint(0, gameState.height - 1))
             for player in alivePlayers:

@@ -23,6 +23,17 @@ class RandomAgent(Agent):
 
         return selectedChoice
     
+class RandomEnemyAgent(Agent):
+    def __init__(self, playerIndex: int) -> None:
+        self.playerIndex = playerIndex
+
+    def getAction(self, gameState: GameState) -> Optional[str]:
+        legalMoves = gameState.getLegalActions(self.playerIndex)
+
+        selectedChoice = random.choice(legalMoves) if len(legalMoves) > 0 else None
+
+        return selectedChoice
+    
 class MinimaxAgent(Agent):
     WIN_REWARD = 100000
 

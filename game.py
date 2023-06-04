@@ -310,6 +310,55 @@ class Actions:
         return possible
     getPossibleActions = staticmethod(getPossibleActions)
 
+    def getVerbosePossibleActions(players: List[Player], width: int, height: int, index: int = 0) -> List[str]:
+        possible = []
+        x, y = players[index].head
+
+        if not players[index].alive:
+            return []
+
+        for direction, vector in Actions._directionsAsList:
+            dx, dy = vector
+            nextx = (x + dx) % width
+            nexty = (y + dy) % height
+
+            for i in range(len(players)):
+                if not players[i].alive:
+                    continue
+                if (nextx, nexty) in players[i].futureBody()[1:]:
+                    # head to body collision
+                    print(f"{nextx},{nexty} collides with {i}th player body")
+                    break
+                # else:
+                #     print(f"{(nextx, nexty)} not in {players[i].futureBody()[1:]}")
+                if i >= index and (nextx, nexty) == players[i].head:
+                    # head to body collision
+                    print(f"{nextx},{nexty} collides with {i}th player head")
+                    break
+                # else:
+                #     print(f"{i} < {index} or  {(nextx, nexty)} not equal to {players[i].head}")
+                if i < index and (nextx, nexty) == players[i].body[-1]:
+                    # head to body collision
+                    print(f"{nextx},{nexty} collides with {i}th player tail")
+                    break
+                # else:
+                #     print(f"{i} >= {index} or {(nextx, nexty)} not equal to {players[i].body[-1]}")
+                if i < index and (nextx, nexty) == players[i].head and players[index].health <= players[i].health:
+                    # head to head collision with lower or equal health
+                    # i < index is to determine players that have already moved and their head position is the "next" head
+                    break
+                if Actions.collidesWithBoundaries((x, y), vector, width, height):
+                    # board boundaries for unwrapped games
+                    print(f"{nextx},{nexty} collides with boundaries")
+                    break
+                # else:
+                #     print(f"{vector} vector does not collide for {(x, y)}")
+            else:
+                possible.append(direction)
+        
+        return possible
+    getVerbosePossibleActions = staticmethod(getVerbosePossibleActions)
+
     def collidesWithBoundaries(position: Tuple[int, int], vector: Tuple[int, int], width: int, height: int) -> bool:
         x, y = position
         dx, dy = vector
