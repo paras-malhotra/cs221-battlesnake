@@ -1,6 +1,6 @@
 import random
 from typing import Any, List, Optional, Tuple
-from agents import Agent, MinimaxAgent
+from agents import Agent, MinimaxAgent, CustomEncoder
 from game import Actions, GameRules, GameState, Player
 import util
 import json
@@ -8,12 +8,6 @@ import json
 class TrainableAgent(Agent):
     def learn(self, beforeState: GameState, afterState: GameState, action: str):
         raise NotImplementedError
-
-class CustomEncoder(json.JSONEncoder):
-    def default(self, o: Any) -> Any:
-        if(isinstance(o, GameState) or isinstance(o, Player)):
-            return o.__dict__
-        return super().default(o)
 
 class Stats(TrainableAgent):
     def __init__(self, agent: Agent) -> None:

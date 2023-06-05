@@ -1,5 +1,4 @@
 import torch
-print(torch.__version__)
 
 import torch.nn as nn
 import torch.optim as optim
@@ -14,7 +13,7 @@ class SnakeInference():
     def __init__(self):
         self.model = CIFAR10Model(channel_count=15,
                                   label_count=1)
-        self.model.load_state_dict(torch.load('/content/drive/MyDrive/snake-model-1.pth'))
+        self.model.load_state_dict(torch.load('snake-model-1.pth'))
         self.model.eval()
         
 
@@ -39,8 +38,8 @@ class ShapedExample():
           alt['action'] = action
           board = GameBoard(alt, example['nextState'])
           self.board_alts.append(board)
-     except:
-        print("NEXT_STATE_IS_UNKNOWN")
+    except:
+        #print("NEXT_STATE_IS_UNKNOWN")
         pass
 
 

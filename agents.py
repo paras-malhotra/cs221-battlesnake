@@ -1,6 +1,8 @@
+import json
+from cnn_inference import SnakeInference
 from game import GameState, Player
 from search import minDistanceToFoodBfs
-from typing import Optional, Tuple, List
+from typing import Any, Optional, Tuple, List
 import random
 
 class Agent:
@@ -207,3 +209,38 @@ class AlphaBetaAgent(MinimaxAgent):
             # print(f"vminimax at depth {depth}, index {index}: {(bestValue, bestMoves[0])}")
 
             return (bestValue, bestMove)
+        
+class CustomEncoder(json.JSONEncoder):
+    def default(self, o: Any) -> Any:
+        if(isinstance(o, GameState) or isinstance(o, Player)):
+            return o.__dict__
+        return super().default(o)
+        
+class QLearningAgent(Agent):
+    def __init__(self) -> None:
+        self.model = SnakeInference()
+
+    def getAction(self, gameState: GameState) -> Optional[str]:
+        # print(f"Game state: {gameState}")
+        legalMoves = gameState.getLegalActions()
+
+        if len(legalMoves) == 0:
+            return None
+
+        values = [(self.model.value(json.loads(json.dumps({'gameState': gameState, 'action': move}, indent=4, cls=CustomEncoder))), move) for move in legalMoves]
+        print(values)
+        return max(values)[1]
+
+class QLearningAlphaBetaAgent(AlphaBetaAgent):
+    def __init__(self, depth: int) -> None:
+        super().__init__(depth)
+        self.model = SnakeInference()
+
+    def evaluationFunction(self, gameState: GameState) -> float:
+        legalMoves = gameState.getLegalActions()
+
+        if len(legalMoves) == 0:
+            return 0.0
+
+        values = [self.model.value(json.loads(json.dumps({'gameState': gameState, 'action': move}, indent=4, cls=CustomEncoder))) for move in legalMoves]
+        return max(values)
