@@ -31,13 +31,17 @@ class ShapedExample():
   def __init__(self, example):
     self.example = example
     self.board_curr = GameBoard(example, example['gameState'])
-    self.board_next = GameBoard(example, example['nextState']) 
-    self.board_alts = []
-    for action in ['left', 'right', 'up', 'down']:
-      alt = self.example.copy()
-      alt['action'] = action
-      board = GameBoard(alt, example['nextState'])
-      self.board_alts.append(board)
+    try:
+        self.board_next = GameBoard(example, example['nextState']) 
+        self.board_alts = []
+        for action in ['left', 'right', 'up', 'down']:
+          alt = self.example.copy()
+          alt['action'] = action
+          board = GameBoard(alt, example['nextState'])
+          self.board_alts.append(board)
+     except:
+        print("NEXT_STATE_IS_UNKNOWN")
+        pass
 
 
 class GameBoard():
