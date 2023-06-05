@@ -117,7 +117,7 @@ class MinimaxAgent(Agent):
 
         # print(f"food score: {foodScore}, distance: {foodDistance}, ({x}, {y}) to {gameState.food}")
 
-        return gameState.players[0].health + foodScore - 20 * (len(gameState.getAlivePlayers()) - 1)
+        return gameState.players[0].health + foodScore
     
     def moveTieBreaker(self, moves: List[str], gameState: GameState) -> Optional[str]:
         return random.choice(moves)

@@ -42,7 +42,7 @@ class Stats(TrainableAgent):
             self.numTies = self.numTies + 1
 
     def printStats(self) -> None:
-        print(f"Wins: {self.numWins}, Losses: {self.numLosses}, Ties: {self.numTies}, Win rate: {round(1.0 * self.numWins / self.totalEpisodes)}")
+        print(f"Wins: {self.numWins}, Losses: {self.numLosses}, Ties: {self.numTies}, Win rate: {round(100.0 * self.numWins / self.totalEpisodes)}%")
 
 class DataDumpAgent(TrainableAgent):
     def __init__(self) -> None:
