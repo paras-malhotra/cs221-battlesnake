@@ -1,6 +1,6 @@
 import random
 from typing import Any, List, Optional, Tuple
-from agents import Agent
+from agents import Agent, MinimaxAgent
 from game import Actions, GameRules, GameState, Player
 import util
 import json
@@ -14,6 +14,35 @@ class CustomEncoder(json.JSONEncoder):
         if(isinstance(o, GameState) or isinstance(o, Player)):
             return o.__dict__
         return super().default(o)
+
+class Stats(TrainableAgent):
+    def __init__(self, agent: Agent) -> None:
+        self.numWins = 0
+        self.numLosses = 0
+        self.numTies = 0
+        self.totalEpisodes = 0
+        self.agent = agent
+
+    def getAction(self, gameState: GameState) -> Optional[str]:
+        return self.agent.getAction(gameState)
+
+    def learn(self, beforeState: GameState, afterState: GameState, action: str):
+        if not afterState.isEndState():
+            return
+
+        self.totalEpisodes = self.totalEpisodes + 1
+
+        print(f"Processed episode #{self.totalEpisodes}")
+
+        if afterState.isWon():
+            self.numWins = self.numWins + 1
+        elif afterState.isLost():
+            self.numLosses = self.numLosses + 1
+        elif afterState.isTie():
+            self.numTies = self.numTies + 1
+
+    def printStats(self) -> None:
+        print(f"Wins: {self.numWins}, Losses: {self.numLosses}, Ties: {self.numTies}, Win rate: {round(1.0 * self.numWins / self.totalEpisodes)}")
 
 class DataDumpAgent(TrainableAgent):
     def __init__(self) -> None:
@@ -58,6 +87,7 @@ class Trainer:
     def train(self, agent: TrainableAgent, numEpisodes: int):
         currentEpisodes = self.numEpisodes
         endEpisodes = currentEpisodes + numEpisodes
+        numMoves = 0
 
         while self.numEpisodes < endEpisodes:
             # new game episode
@@ -79,11 +109,19 @@ class Trainer:
                         ourAction = action
 
                 currentState.accountForEndState()
-                agent.learn(beforeState, currentState.deepCopy(), ourAction)
+
+                afterState = currentState.deepCopy()
+                afterState.accountForEndState()
+                agent.learn(beforeState, afterState, ourAction)
+
+                numMoves = numMoves + 1
+                print(f"Move #{numMoves} complete")
+
                 # print(f"transitioned from {beforeState.players} to {currentState.players}")
                 GameSimulator.ensureMinimumFood(currentState)
             # print(f"transitioned from {beforeState.players} to {currentState.players}")
             self.numEpisodes = self.numEpisodes + 1
+            print(f"Episode #{self.numEpisodes} complete")
         
 class GameSimulator:
     def getRandomGameState(width: int, height: int, numEnemies: int) -> GameState:

@@ -56,7 +56,7 @@ class MinimaxAgent(Agent):
             if len(legalMoves) > 0:
                 return self.moveTieBreaker(legalMoves, gameState)
             
-        print(f"At {gameState.players[0].head}, legal moves: {gameState.getLegalActions()}, selected: {bestMove}")
+        #print(f"At {gameState.players[0].head}, legal moves: {gameState.getLegalActions()}, selected: {bestMove}")
 
         return bestMove
         
