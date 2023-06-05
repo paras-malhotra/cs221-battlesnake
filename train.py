@@ -26,7 +26,7 @@ class DataDumpAgent(TrainableAgent):
         return selectedChoice
 
     def learn(self, beforeState: GameState, afterState: GameState, action: str):
-        self.dataset.append({'gameState': beforeState, 'action': action, 'reward': self.getReward(beforeState, afterState)})
+        self.dataset.append({'gameState': beforeState, 'action': action, 'reward': self.getReward(beforeState, afterState), 'nextState': afterState})
 
     def getReward(self, beforeState: GameState, afterState: GameState) -> float:
         if afterState.isEndState():
@@ -63,8 +63,8 @@ class Trainer:
             # new game episode
             currentState = GameSimulator.getRandomGameState(self.width, self.height, self.numEnemies)
             while not currentState.isEndState():
-                alivePlayers = currentState.getAlivePlayers()
                 beforeState = currentState.deepCopy()
+                alivePlayers = currentState.getAlivePlayers()
                 for player in alivePlayers:
                     action = agent.getAction(currentState) if player.ours else self.enemyAgents[player.id - 2].getAction(currentState)
                     if action is None or action not in GameRules.getLegalActions(currentState, player.id - 1):
@@ -79,7 +79,8 @@ class Trainer:
                         ourAction = action
 
                 currentState.accountForEndState()
-                agent.learn(beforeState, currentState, ourAction)
+                agent.learn(beforeState, currentState.deepCopy(), ourAction)
+                # print(f"transitioned from {beforeState.players} to {currentState.players}")
                 GameSimulator.ensureMinimumFood(currentState)
             # print(f"transitioned from {beforeState.players} to {currentState.players}")
             self.numEpisodes = self.numEpisodes + 1
