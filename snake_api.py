@@ -1,10 +1,9 @@
-from snake_move import SnakeMove
 
 
 class SnakeApi():
 
-    def __init__(self):
-        self.snake_move = SnakeMove()
+    def __init__(self, snake_move):
+        self.snake_move = snake_move
 
     def info(self):
         # print("INFO")

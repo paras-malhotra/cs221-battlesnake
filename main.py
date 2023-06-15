@@ -2,12 +2,14 @@ from flask import Flask
 from flask import request
 
 from snake_api import SnakeApi
+from snake_move import SnakeRandomMove, SnakeMinimaxMove, SnakeAlphabetaMove
 
 # If `entrypoint` is not defined in app.yaml, App Engine will look for an app
 # called `app` in `main.py`.
 app = Flask(__name__)
 
-snake_api = SnakeApi()
+
+snake_api = SnakeApi(SnakeRandomMove())
 
 @app.route("/")
 def hello():
