@@ -1,11 +1,13 @@
+from snake_move import SnakeMove
 
 
 class SnakeApi():
 
     def __init__(self):
-        pass
+        self.snake_move = SnakeMove()
 
     def info(self):
+        # print("INFO")
         return {
             "apiversion": "1",
             "author": "bigbrains-snake",  # TODO: Your Battlesnake Username
@@ -14,11 +16,13 @@ class SnakeApi():
             "tail": "hook",  # TODO: Choose tail
         }
     
-    def start(self):
+    def start(self, game_state):
+        print(f"GAME START at {game_state['board']}")
         return "start"
 
-    def move(self):
-        return "move"
-
-    def end(self):
+    def end(self, game_state):
+        print("GAME OVER\n")
         return "end"
+    
+    def move(self, game_state):
+        return self.snake_move.move(game_state)
