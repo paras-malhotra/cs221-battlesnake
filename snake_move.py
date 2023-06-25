@@ -1,5 +1,5 @@
 from game import GameState
-from agents import MinimaxAgent, RandomAgent, AlphaBetaAgent
+from snake_agents import MinimaxAgent, RandomAgent, AlphaBetaAgent
 
 
 class SnakeMove():
@@ -24,11 +24,10 @@ class SnakeRandomMove(SnakeMove):
 class SnakeMinimaxMove(SnakeMove):
 
     def __init__(self):
-        self.agent = MinimaxAgent(3)
-
+        self.agent = MinimaxAgent(depth=3)
 
 
 class SnakeAlphabetaMove(SnakeMove):
 
     def __init__(self):
-        self.agent = AlphaBetaAgent(3)
+        self.agent = AlphaBetaAgent(depth=3)
