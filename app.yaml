@@ -1,6 +1,11 @@
 runtime: python39
-# env: flex
+
 entrypoint: gunicorn -b :$PORT main:snake_app
+
+# https://cloud.google.com/appengine/docs/standard#instance_classes
+instance_class: F4_1G
+
+# env: flex
 # runtime_config:
 #   operating_system: ubuntu22
 
