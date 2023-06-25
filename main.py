@@ -1,16 +1,12 @@
 from flask import Flask
 from flask import request
-from flask import jsonify
 
-from snake_api import SnakeApi
-from snake_move import SnakeRandomMove, SnakeMinimaxMove, SnakeAlphabetaMove
+from snake_api import SnakeBrain
 
 # If `entrypoint` is not defined in app.yaml, App Engine will look for an app
 # called `app` in `main.py`.
 snake_app = Flask(__name__)
-
-
-snake_api = SnakeApi(SnakeRandomMove())
+snake_api = SnakeBrain()
 
 @snake_app.route("/")
 def hello():
@@ -38,7 +34,8 @@ def on_start():
 @snake_app.post("/move")
 def on_move():
     game_state = request.get_json()
-    return snake_api.move(game_state)
+    snake_name = request.args["snake_name"]
+    return snake_api.move(game_state, snake_name)
 
 @snake_app.post("/end")
 def on_end():
