@@ -23,11 +23,11 @@ class SnakeRandomMove(SnakeMove):
 
 class SnakeMinimaxMove(SnakeMove):
 
-    def __init__(self):
-        self.agent = MinimaxAgent(depth=3)
+    def __init__(self, depth):
+        self.agent = MinimaxAgent(depth)
 
 
 class SnakeAlphabetaMove(SnakeMove):
 
-    def __init__(self):
-        self.agent = AlphaBetaAgent(depth=3)
+    def __init__(self, depth):
+        self.agent = AlphaBetaAgent(depth)
