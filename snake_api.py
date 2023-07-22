@@ -30,15 +30,20 @@ class SnakeBrain(SnakeApi):
 
     def __init__(self):
         self.brain_bucket = {}
+        self.max_depth = 10
         # random
         self.brain_bucket[SnakeBrain.RANDOM_BRAIN] = SnakeRandomMove()
         # minimax
-        for depth in range(3):
+        for depth in range(self.max_depth):
             self.brain_bucket[SnakeBrain.MINIMAX_BRAIN + "_" + str(depth)] = SnakeMinimaxMove(depth)
         # alpha beta 
-        for depth in range(3):
+        for depth in range(self.max_depth):
             self.brain_bucket[SnakeBrain.ALPHABETA_BRAIN + "_" + str(depth)] = SnakeAlphabetaMove(depth)
     
     def move(self, game_state, snake_name):
-        snake_brain = self.brain_bucket[snake_name.lower()]
-        return snake_brain.move(game_state)
+        try:
+            snake_brain = self.brain_bucket[snake_name.lower()]
+            return snake_brain.move(game_state)
+        except Exception as e:
+            print("GET_BRAIN_EXCEPTION=" + str(e))
+
