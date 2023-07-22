@@ -3,8 +3,10 @@ from snake_move import SnakeRandomMove, SnakeMinimaxMove, SnakeAlphabetaMove
 
 class SnakeApi():
 
-    def info(self, web_app):
+    def __init__(self, web_app):
         self.web_app = web_app
+
+    def info(self):
         # print("INFO")
         return {
             "apiversion": "1",
