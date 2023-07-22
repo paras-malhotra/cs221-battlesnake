@@ -36,7 +36,7 @@ class SnakeBrain(SnakeApi):
         for depth in range(3):
             self.brain_bucket[SnakeBrain.MINIMAX_BRAIN + "_" + str(depth)] = SnakeMinimaxMove(depth)
         # alpha beta 
-        for i in range(3):
+        for depth in range(3):
             self.brain_bucket[SnakeBrain.ALPHABETA_BRAIN + "_" + str(depth)] = SnakeAlphabetaMove(depth)
     
     def move(self, game_state, snake_name):
