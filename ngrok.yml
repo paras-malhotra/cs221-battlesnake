@@ -3,7 +3,7 @@ version: '2'
 authtoken: 2SwRcL56pZ0qBsTGtxtty3qVePt_6q9mrXV7f6P5wXCmekL7Q
 tunnels:
   first:
-    addr: http://localhost:5000
+    addr: http://localhost:4040 
     proto: http
     domain: ab30-34-123-4-237.ngrok-free.app
   second:
