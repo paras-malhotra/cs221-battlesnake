@@ -1,8 +1,8 @@
 from flask import Flask, request
 from flask_ngrok import run_with_ngrok
-from flask import has_request_context
-from flask.logging import default_handler
-import logging
+# from flask import has_request_context
+# from flask.logging import default_handler
+# import logging
 
 from snake_api import SnakeBrain
 
@@ -58,25 +58,26 @@ def identify_server(response):
     )
     return response
 
-class RequestFormatter(logging.Formatter):
-    def format(self, record):
-        if has_request_context():
-            record.url = request.url
-            record.remote_addr = request.remote_addr
-        else:
-            record.url = None
-            record.remote_addr = None
+# class RequestFormatter(logging.Formatter):
+#     def format(self, record):
+#         if has_request_context():
+#             record.url = request.url
+#             record.remote_addr = request.remote_addr
+#         else:
+#             record.url = None
+#             record.remote_addr = None
 
-        return super().format(record)
-formatter = RequestFormatter(
-    '[%(asctime)s] %(remote_addr)s requested %(url)s\n'
-    '%(levelname)s in %(module)s: %(message)s'
-)
-default_handler.setFormatter(formatter)
+#         return super().format(record)
+# formatter = RequestFormatter(
+#     '[%(asctime)s] %(remote_addr)s requested %(url)s\n'
+#     '%(levelname)s in %(module)s: %(message)s'
+# )
+# default_handler.setFormatter(formatter)
 
 if __name__ == "__main__":
     ### NGROK
-    snake_app.logger.setLevel(logging.INFO)
+    snake_app.config['FLASK_DEBUG'] = True
+    # snake_app.logger.setLevel(logging.INFO)
     snake_app.run()
     ### LOCAL
     # This is used when running locally only. When deploying to Google App
