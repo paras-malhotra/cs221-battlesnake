@@ -1,2 +1,7 @@
+# flask
 Flask==2.1.0
+# gcp
 gunicorn==20.1.0
+# ngrok
+pyngrok==4.1.1
+flask_ngrok

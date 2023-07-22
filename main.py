@@ -1,12 +1,16 @@
-from flask import Flask
-from flask import request
+from flask import Flask, request
+from flask_ngrok import run_with_ngrok
 
 from snake_api import SnakeBrain
 
-# If `entrypoint` is not defined in app.yaml, App Engine will look for an app
-# called `app` in `main.py`.
+# app
 snake_app = Flask(__name__)
 snake_api = SnakeBrain()
+
+### run 
+# runs on GCP defined by app.yml
+run_with_ngrok(snake_app)
+
 
 @snake_app.route("/")
 def hello():
