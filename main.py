@@ -76,7 +76,7 @@ def identify_server(response):
 
 if __name__ == "__main__":
     ### NGROK
-    snake_app.config['FLASK_DEBUG'] = True
+    # snake_app.config['FLASK_DEBUG'] = True
     # snake_app.logger.setLevel(logging.INFO)
     snake_app.run()
     ### LOCAL
