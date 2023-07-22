@@ -17,7 +17,7 @@ class SnakeApi():
         }
     
     def start(self, game_state):
-        self.web_app.logger.info('%s logged in successfully', game_state['board'])
+        # self.web_app.logger.info('%s logged in successfully', game_state['board'])
         # print(f"GAME START at {game_state['board']}")
         return "start"
 
