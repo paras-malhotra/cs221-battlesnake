@@ -3,10 +3,14 @@ version: '2'
 authtoken: 2SwRcL56pZ0qBsTGtxtty3qVePt_6q9mrXV7f6P5wXCmekL7Q
 tunnels:
   first:
-    addr: 4040
-    proto: http
     domain: c06f-34-123-4-237.ngrok-free.app  
-  second:
     addr: 4040
     proto: http
-    domain: c0ec-35-193-100-24.ngrok-free.app
+    schemes: 
+      - https
+  second:
+    domain: c0ec-35-193-100-24.ngrok-free.app  
+    addr: 4040
+    proto: http
+    schemes: 
+      - https
