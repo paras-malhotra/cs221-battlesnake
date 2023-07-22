@@ -9,4 +9,4 @@ tunnels:
   second:
     addr: http://localhost:5000    
     proto: http
-    domain: http://84ad-34-123-4-237.ngrok-free.app
+    domain: https://ab82-34-123-4-237.ngrok-free.app
