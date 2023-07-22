@@ -2,6 +2,7 @@
 Flask==2.1.0
 # gcp
 gunicorn==20.1.0
-# ngrok
-pyngrok==6.0.0
-flask_ngrok==0.2.4
+### ngrok
+# pyngrok==6.0.0
+# flask_ngrok==0.2.4
+ngrok==0.8.1 

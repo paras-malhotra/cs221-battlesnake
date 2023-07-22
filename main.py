@@ -3,13 +3,14 @@ from flask_ngrok import run_with_ngrok
 
 from snake_api import SnakeBrain
 
-# app
+### app
 snake_app = Flask(__name__)
 snake_api = SnakeBrain()
 
 ### run 
-# runs on GCP defined by app.yml
+## NGROK: https://www.youtube.com/watch?v=wBCEDCiQh3Q
 run_with_ngrok(snake_app)
+## GCP: defined by app.yml
 
 
 @snake_app.route("/")
