@@ -5,7 +5,7 @@ from snake_api import SnakeBrain
 
 ### app
 snake_app = Flask(__name__)
-snake_api = SnakeBrain()
+snake_api = SnakeBrain(snake_app)
 
 ### run 
 ## NGROK: https://www.youtube.com/watch?v=wBCEDCiQh3Q
@@ -58,7 +58,7 @@ def identify_server(response):
 
 if __name__ == "__main__":
     ### NGROK
-    snake_app.run()
+    snake_app.run(debug=True)
     ### LOCAL
     # This is used when running locally only. When deploying to Google App
     # Engine, a webserver process such as Gunicorn will serve the app. You
