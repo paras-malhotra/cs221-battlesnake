@@ -5,6 +5,8 @@ tunnels:
   first:
     addr: http://localhost:5000
     proto: http
+    domain: ab30-34-123-4-237.ngrok-free.app
   second:
     addr: http://localhost:4040    
     proto: http
+    domain: 5117-34-123-4-237.ngrok-free.app
