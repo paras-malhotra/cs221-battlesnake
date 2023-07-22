@@ -3,7 +3,8 @@ from snake_move import SnakeRandomMove, SnakeMinimaxMove, SnakeAlphabetaMove
 
 class SnakeApi():
 
-    def info(self):
+    def info(self, web_app):
+        self.web_app = flask_aweb_apppp
         # print("INFO")
         return {
             "apiversion": "1",
@@ -14,7 +15,8 @@ class SnakeApi():
         }
     
     def start(self, game_state):
-        print(f"GAME START at {game_state['board']}")
+        self.web_app.logger.info('%s logged in successfully', game_state['board'])
+        # print(f"GAME START at {game_state['board']}")
         return "start"
 
     def end(self, game_state):
