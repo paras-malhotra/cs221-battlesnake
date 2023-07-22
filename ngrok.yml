@@ -1,27 +1,27 @@
-region: us
-version: '2'
+region: eu
+version: '3'
 authtoken: 2SwRcL56pZ0qBsTGtxtty3qVePt_6q9mrXV7f6P5wXCmekL7Q
-tunnels:
-  first:
-    addr: http://localhost:5000 
-    proto: http
-    domain: 84ad-34-123-4-237.ngrok-free.app
-  second:
-    addr: http://localhost:5000    
-    proto: http
-    domain: ab82-34-123-4-237.ngrok-free.app
-  third:
-    addr: http://localhost:5000    
-    proto: http
-    domain: 80b9-34-123-4-237.ngrok-free.app
-  fourth:
-    addr: http://localhost:5000    
-    proto: http
-    domain: b7ed-34-123-4-237.ngrok-free.app
-  fifth:
-    addr: http://localhost:5000    
-    proto: http
-    domain: 4b57-34-123-4-237.ngrok-free.app
+# tunnels:
+#   first:
+#     addr: http://localhost:5000 
+#     proto: http
+#     domain: 84ad-34-123-4-237.ngrok-free.app
+#   second:
+#     addr: http://localhost:5000    
+#     proto: http
+#     domain: ab82-34-123-4-237.ngrok-free.app
+#   third:
+#     addr: http://localhost:5000    
+#     proto: http
+#     domain: 80b9-34-123-4-237.ngrok-free.app
+#   fourth:
+#     addr: http://localhost:5000    
+#     proto: http
+#     domain: b7ed-34-123-4-237.ngrok-free.app
+#   fifth:
+#     addr: http://localhost:5000    
+#     proto: http
+#     domain: 4b57-34-123-4-237.ngrok-free.app
 
 
     
