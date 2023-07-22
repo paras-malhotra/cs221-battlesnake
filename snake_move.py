@@ -8,11 +8,15 @@ class SnakeMove():
         pass
 
     def move(self, game_state):
-        #print(f"State: {game_state}")
-        state = GameState(game_state)
-        recommendedMove = self.agent.getAction(state)
-
-        return {"move": recommendedMove, "shout": ""}
+        recommended = "idk move"
+        shout = "let me check..."
+        try:
+            #print(f"State: {game_state}")
+            state = GameState(game_state)
+            recommended = self.agent.getAction(state)
+        except Exception as e:
+            shout = "SNAKE_MOVE_ERROR=" + str(e)
+        return {"move": recommended, "shout": shout}
    
 
 class SnakeRandomMove(SnakeMove):

@@ -41,9 +41,7 @@ class SnakeBrain(SnakeApi):
             self.brain_bucket[SnakeBrain.ALPHABETA_BRAIN + "_" + str(depth)] = SnakeAlphabetaMove(depth)
     
     def move(self, game_state, snake_name):
-        try:
-            snake_brain = self.brain_bucket[snake_name.lower()]
-            return snake_brain.move(game_state)
-        except Exception as e:
-            print("GET_BRAIN_EXCEPTION=" + str(e))
+        snake_brain = self.brain_bucket[snake_name.lower()]
+        return snake_brain.move(game_state)
+            
 
