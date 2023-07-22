@@ -3,14 +3,6 @@ version: '2'
 authtoken: 2SwRcL56pZ0qBsTGtxtty3qVePt_6q9mrXV7f6P5wXCmekL7Q
 tunnels:
   first:
-    domain: 5117-34-123-4-237.ngrok-free.app  
-    addr: 4040
-    proto: http
-    schemes: 
-      - http
+    domain: http://5117-34-123-4-237.ngrok-free.app  
   second:
-    domain: 5117-34-123-4-237.ngrok-free.app    
-    addr: 4040
-    proto: https
-    schemes: 
-      - https
+    domain: https://5117-34-123-4-237.ngrok-free.app    
