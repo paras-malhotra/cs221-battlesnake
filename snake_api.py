@@ -4,7 +4,7 @@ from snake_move import SnakeRandomMove, SnakeMinimaxMove, SnakeAlphabetaMove
 class SnakeApi():
 
     def info(self, web_app):
-        self.web_app = flask_aweb_apppp
+        self.web_app = web_app
         # print("INFO")
         return {
             "apiversion": "1",
@@ -30,7 +30,8 @@ class SnakeBrain(SnakeApi):
     MINIMAX_BRAIN = "MINIMAX_BRAIN".lower()
     ALPHABETA_BRAIN = "ALPHABETA_BRAIN".lower()
 
-    def __init__(self):
+    def __init__(self, web_app):
+        super().__init__(web_app)
         self.brain_bucket = {}
         self.max_depth = 10
         # random
