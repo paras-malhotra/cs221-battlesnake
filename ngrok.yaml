@@ -2,7 +2,11 @@ region: us
 version: '2'
 authtoken: 2SwRcL56pZ0qBsTGtxtty3qVePt_6q9mrXV7f6P5wXCmekL7Q
 tunnels:
-  tunnel1:
+  snake_tunnel:
     addr: http://localhost:5000 
+    proto: http    
+    host_header: rewrite
+  ngrok_tunnel:
+    addr: http://localhost:4040 
     proto: http    
     host_header: rewrite
