@@ -26,7 +26,7 @@ def hello():
     return snake_brain.info()
     # return "Hello World!"
 
-@snake_app.get("/args")
+@snake_app.post("/args")
 def args():
     # game_state = request.get_json()
     # snake_brain.end(game_state)
