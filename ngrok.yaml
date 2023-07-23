@@ -5,3 +5,4 @@ tunnels:
   tunnel1:
     addr: http://localhost:5000 
     proto: http    
+    host_header: rewrite
