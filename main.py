@@ -17,12 +17,7 @@ run_with_ngrok(snake_app)
 
 
 @snake_app.route("/")
-def hello():
-    """Return a friendly HTTP greeting.
-
-    Returns:
-        A string with the words 'Hello World!'.
-    """
+def hello_world():
     return snake_brain.info()
     # return "Hello World!"
 
@@ -37,20 +32,19 @@ def args():
     # return jsonify(request.get_json())
     return request.args
 
-@snake_app.post("/start")
-# @app.route('/entry', methods=['GET', 'POST'])
+@snake_app.route("/start", methods=['GET', 'POST'])
 def on_start():
     game_state = request.get_json()
     snake_brain.start(game_state)
     return "ok"
 
-@snake_app.post("/move")
+@snake_app.route("/move", methods=['GET', 'POST'])
 def on_move():
     game_state = request.get_json()
     snake_name = request.args["snake_name"]
     return snake_brain.move(game_state, snake_name)
 
-@snake_app.post("/end")
+@snake_app.route("/end", methods=['GET', 'POST'])
 def on_end():
     game_state = request.get_json()
     snake_brain.end(game_state)
