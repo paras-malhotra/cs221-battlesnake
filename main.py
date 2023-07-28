@@ -34,8 +34,8 @@ def args():
 
 @snake_app.route("/start", methods=['GET', 'POST'])
 def on_start():
-    game_state = request.get_json()
-    snake_brain.start(game_state)
+    # game_state = request.get_json()
+    # snake_brain.start(game_state)
     return "ok"
 
 @snake_app.route("/move", methods=['GET', 'POST'])
@@ -83,3 +83,10 @@ if __name__ == "__main__":
     # Engine, a webserver process such as Gunicorn will serve the app. You
     # can configure startup instructions by adding `entrypoint` to app.yaml.
     # snake_app.run(host="127.0.0.1", port=8080, debug=True)
+
+
+
+# app.logger.debug('This is a DEBUG message')
+# app.logger.info('This is an INFO message')
+# app.logger.warning('This is a WARNING message')
+# app.logger.error('This is an ERROR message')    
