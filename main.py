@@ -1,5 +1,5 @@
 from flask import Flask, request
-from flask_ngrok import run_with_ngrok
+# from flask_ngrok import run_with_ngrok
 # from flask import has_request_context
 # from flask.logging import default_handler
 # import logging
@@ -12,7 +12,7 @@ snake_brain = SnakeBrain(snake_app)
 
 ### run 
 ## NGROK: https://www.youtube.com/watch?v=wBCEDCiQh3Q
-run_with_ngrok(snake_app)
+# run_with_ngrok(snake_app)
 ## GCP: defined by app.yml
 
 
