@@ -26,6 +26,10 @@ def hello():
     return snake_brain.info()
     # return "Hello World!"
 
+@snake_app.route("/favicon.ico")
+def fav_ico():
+    return snake_brain.info()
+
 @snake_app.post("/args")
 def args():
     # game_state = request.get_json()
