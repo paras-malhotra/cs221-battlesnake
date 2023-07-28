@@ -15,25 +15,19 @@ def hello_world():
 def fav_ico():
     return snake_brain.info()
 
-@snake_app.route("/start", methods=['GET', 'POST'])
-def on_start():
-    game_state = request.get_json()
-    snake_brain.start(game_state)
-    return "ok"
-
 @snake_app.post("/start")
 def on_start():
     game_state = request.get_json()
     snake_brain.start(game_state)
     return "ok"
 
-@snake_app.route("/move", methods=['GET', 'POST'])
+@snake_app.post("/move")
 def on_move():
     game_state = request.get_json()
     snake_name = request.args["snake_name"]
     return snake_brain.move(game_state, snake_name)
 
-@snake_app.route("/end", methods=['GET', 'POST'])
+@snake_app.post("/end")
 def on_end():
     game_state = request.get_json()
     snake_brain.end(game_state)
