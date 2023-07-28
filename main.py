@@ -1,8 +1,4 @@
 from flask import Flask, request
-# from flask_ngrok import run_with_ngrok
-# from flask import has_request_context
-# from flask.logging import default_handler
-# import logging
 
 from snake_api import SnakeBrain
 
@@ -10,32 +6,25 @@ from snake_api import SnakeBrain
 snake_app = Flask(__name__)
 snake_brain = SnakeBrain(snake_app)
 
-### run 
-## NGROK: https://www.youtube.com/watch?v=wBCEDCiQh3Q
-# run_with_ngrok(snake_app)
-## GCP: defined by app.yml
-
-
+### routes
 @snake_app.route("/")
 def hello_world():
     return snake_brain.info()
-    # return "Hello World!"
 
 @snake_app.route("/favicon.ico")
 def fav_ico():
     return snake_brain.info()
 
-@snake_app.route("/args", methods=['GET', 'POST'])
-def args():
-    # game_state = request.get_json()
-    # snake_brain.end(game_state)
-    # return jsonify(request.get_json())
-    return request.args
-
 @snake_app.route("/start", methods=['GET', 'POST'])
 def on_start():
-    # game_state = request.get_json()
-    # snake_brain.start(game_state)
+    game_state = request.get_json()
+    snake_brain.start(game_state)
+    return "ok"
+
+@snake_app.post("/start")
+def on_start():
+    game_state = request.get_json()
+    snake_brain.start(game_state)
     return "ok"
 
 @snake_app.route("/move", methods=['GET', 'POST'])
@@ -57,27 +46,11 @@ def identify_server(response):
     )
     return response
 
-# class RequestFormatter(logging.Formatter):
-#     def format(self, record):
-#         if has_request_context():
-#             record.url = request.url
-#             record.remote_addr = request.remote_addr
-#         else:
-#             record.url = None
-#             record.remote_addr = None
-
-#         return super().format(record)
-# formatter = RequestFormatter(
-#     '[%(asctime)s] %(remote_addr)s requested %(url)s\n'
-#     '%(levelname)s in %(module)s: %(message)s'
-# )
-# default_handler.setFormatter(formatter)
-
 if __name__ == "__main__":
     ### NGROK
     # snake_app.config['FLASK_DEBUG'] = True
     # snake_app.logger.setLevel(logging.INFO)
-    snake_app.run()
+    snake_app.run(port=5000)
     ### LOCAL
     # This is used when running locally only. When deploying to Google App
     # Engine, a webserver process such as Gunicorn will serve the app. You
