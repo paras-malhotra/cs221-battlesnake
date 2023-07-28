@@ -30,7 +30,7 @@ def hello():
 def fav_ico():
     return snake_brain.info()
 
-@snake_app.post("/args")
+@snake_app.route("/args", methods=['GET', 'POST'])
 def args():
     # game_state = request.get_json()
     # snake_brain.end(game_state)
@@ -38,6 +38,7 @@ def args():
     return request.args
 
 @snake_app.post("/start")
+# @app.route('/entry', methods=['GET', 'POST'])
 def on_start():
     game_state = request.get_json()
     snake_brain.start(game_state)
