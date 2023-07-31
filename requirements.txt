@@ -1,4 +1,1 @@
-# flask
-Flask==2.1.0
-# gcp
-gunicorn==20.1.0
+Flask==2.3.2

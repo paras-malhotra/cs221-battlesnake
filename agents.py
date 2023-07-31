@@ -1,5 +1,5 @@
 import json
-# from cnn_inference import SnakeInference
+from cnn_inference import SnakeInference
 from game import GameState, Player
 from search import minDistanceToFoodBfs
 from typing import Any, Optional, Tuple, List
